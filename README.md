@@ -34,7 +34,7 @@ El sistema analiza los gastos de los usuarios registrados, generando datos reale
 
 - Java >= 21
 - Maven instalado
-- 
+- Python 3.12.2
 
 
 ## 🛠 Tecnologías

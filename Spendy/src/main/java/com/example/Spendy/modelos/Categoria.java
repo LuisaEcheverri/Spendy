@@ -2,8 +2,14 @@ package com.example.Spendy.modelos;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
+import com.example.Spendy.modelos.utils.Estado;
+import com.example.Spendy.modelos.utils.Prioridad;
+import com.example.Spendy.modelos.utils.TipoGasto;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 //las anotaciones se copian encima donde quiero dar funcionalidad
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,28 +25,43 @@ import jakarta.persistence.Table;
  //Crear llaves primarias (UUAD)
 
 public class Categoria {
-    //Para especificar cuál srá la primary key de la tabla
+    //Para especificar cuál será la primary key de la tabla
     @Id
     //Para decirle que la base de datos se va a encargar de generar el ID
     @GeneratedValue(strategy = GenerationType.IDENTITY)  
-   
 
-    //id,nombre,fechaCreacion,responsable,justificacion
+    //Utilizar snake_case por convención para nombrar los campos de la BD (Ejemplo -> base_de_datos)
     private Integer id;
-    private String nombre;
+    @Column(name = "nombre", nullable = false, unique = false, length = 50)
+    private String nombre; 
+    @Column(name = "fecha_creacion", nullable = false, unique = false)
     private LocalDate fechaCreacion;
+    @Column(name = "responsable", nullable = false, unique = false, length = 50)
     private String responsable;
+    @Column(name = "edad", nullable = false, unique = false)
     private Integer edad;
+    @Column(name = "justifiacion", nullable = true, unique = false)
     private String justificacion;
 
     // Nuevos atributos
-    private Double presupuestoAsignado;
+    @Column()
+    private TipoGasto tipoGasto;
+    @Column(name = "monto_gastado", nullable = false, unique = false)
     private Double montoGastado;
-    private String estado;
-    private Integer prioridad;
+    @Column(name = "estado_gasto", nullable = false, unique = false)
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
+    @Column(name = "prioridad", nullable = false, unique = false)
+    @Enumerated (EnumType.STRING)
+    private Prioridad prioridad;
+    @Column(name = "tipo", nullable = false, unique = false)
+    @Enumerated(EnumType.STRING)
+
+
+
     private String tipo; //→ Define si la categoría es fija, variable, ocasional, etc
     public Categoria(Integer id, String nombre, LocalDate fechaCreacion, String responsable, Integer edad,
-            String justificacion, Double presupuestoAsignado, Double montoGastado, String estado, Integer prioridad,
+            String justificacion, TipoGasto tipoGasto, Double montoGastado, Estado estado, Prioridad prioridad,
             String tipo) {
         this.id = id;
         this.nombre = nombre;
@@ -48,7 +69,7 @@ public class Categoria {
         this.responsable = responsable;
         this.edad = edad;
         this.justificacion = justificacion;
-        this.presupuestoAsignado = presupuestoAsignado;
+        this.tipoGasto = tipoGasto;
         this.montoGastado = montoGastado;
         this.estado = estado;
         this.prioridad = prioridad;
@@ -90,11 +111,11 @@ public class Categoria {
     public void setJustificacion(String justificacion) {
         this.justificacion = justificacion;
     }
-    public Double getPresupuestoAsignado() {
-        return presupuestoAsignado;
+    public TipoGasto getTipoCategoria() {
+        return tipoGasto;
     }
-    public void setPresupuestoAsignado(Double presupuestoAsignado) {
-        this.presupuestoAsignado = presupuestoAsignado;
+    public void setPresupuestoAsignado(TipoGasto presupuestoAsignado) {
+        this.tipoGasto = tipoGasto;
     }
     public Double getMontoGastado() {
         return montoGastado;
@@ -102,16 +123,16 @@ public class Categoria {
     public void setMontoGastado(Double montoGastado) {
         this.montoGastado = montoGastado;
     }
-    public String getEstado() {
+    public Estado getEstado() {
         return estado;
     }
-    public void setEstado(String estado) {
+    public void setEstado(Estado estado) {
         this.estado = estado;
     }
-    public Integer getPrioridad() {
+    public Prioridad getPrioridad() {
         return prioridad;
     }
-    public void setPrioridad(Integer prioridad) {
+    public void setPrioridad(Prioridad prioridad) {
         this.prioridad = prioridad;
     }
     public String getTipo() {

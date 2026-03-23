@@ -15,6 +15,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
  // anotación de Springboot para poder crear una tabla de base de datos 
@@ -57,7 +59,10 @@ public class Categoria {
     @Column(name = "tipo", nullable = false, unique = false)
     @Enumerated(EnumType.STRING)
 
-
+    //Creando una relación con el modelo Gasto
+    @ManyToOne
+    @JoinColumn(name = "fk_gasto", referencedColumnName = "id")
+    private Gasto gasto;
 
     private String tipo; //→ Define si la categoría es fija, variable, ocasional, etc
     public Categoria(Integer id, String nombre, LocalDate fechaCreacion, String responsable, Integer edad,

@@ -4,14 +4,13 @@ import java.time.LocalDate;
 
 import com.example.Spendy.modelos.utils.Estado;
 import com.example.Spendy.modelos.utils.Prioridad;
-import com.example.Spendy.modelos.utils.TipoGasto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 //las anotaciones se copian encima donde quiero dar funcionalidad
-import jakarta.persistence.Entity;
+
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -47,8 +46,8 @@ public class Categoria {
 
     // Nuevos atributos
     @Column()
-    private TipoGasto tipoGasto;
-    @Column(name = "monto_gastado", nullable = false, unique = false)
+    private double presupuestoAsignado;
+    @Column(name = "presupuesto_asignado", nullable = false, unique = false)
     private Double montoGastado;
     @Column(name = "estado_gasto", nullable = false, unique = false)
     @Enumerated(EnumType.STRING)
@@ -66,7 +65,7 @@ public class Categoria {
 
     private String tipo; //→ Define si la categoría es fija, variable, ocasional, etc
     public Categoria(Integer id, String nombre, LocalDate fechaCreacion, String responsable, Integer edad,
-            String justificacion, TipoGasto tipoGasto, Double montoGastado, Estado estado, Prioridad prioridad,
+            String justificacion, double presupuestoAsignado, Double montoGastado, Estado estado, Prioridad prioridad,
             String tipo) {
         this.id = id;
         this.nombre = nombre;
@@ -74,8 +73,8 @@ public class Categoria {
         this.responsable = responsable;
         this.edad = edad;
         this.justificacion = justificacion;
-        this.tipoGasto = tipoGasto;
-        this.montoGastado = montoGastado;
+        
+        this.presupuestoAsignado = presupuestoAsignado;
         this.estado = estado;
         this.prioridad = prioridad;
         this.tipo = tipo;
@@ -116,11 +115,12 @@ public class Categoria {
     public void setJustificacion(String justificacion) {
         this.justificacion = justificacion;
     }
-    public TipoGasto getTipoCategoria() {
-        return tipoGasto;
+    
+    public double getPresupuestoAsignado() {
+        return presupuestoAsignado;
     }
-    public void setPresupuestoAsignado(TipoGasto presupuestoAsignado) {
-        this.tipoGasto = tipoGasto;
+    public void setPresupuestoAsignado(double presupuestoAsignado) {
+        this.presupuestoAsignado = presupuestoAsignado;
     }
     public Double getMontoGastado() {
         return montoGastado;

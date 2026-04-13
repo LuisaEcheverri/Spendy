@@ -1,9 +1,12 @@
 package com.example.Spendy.modelos;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
     @Entity
@@ -23,6 +26,9 @@ import jakarta.persistence.Table;
     private String comercio; //Nombre del lugar donde se hizo el gasto.
     private String ubicacion; // ubicación real donde se realizó.
 
+    //Creando una relación con el modelo Categoria
+    @OneToMany(mappedBy = "gasto")
+    private List<Categoria> categorias;
     // Constructor Vacío
     public Gasto() {}
 

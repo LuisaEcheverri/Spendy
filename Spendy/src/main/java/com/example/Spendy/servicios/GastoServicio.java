@@ -4,33 +4,46 @@ import com.example.Spendy.modelos.Gasto;
 import com.example.Spendy.repositorios.IGastoRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GastoServicio {
 
     @Autowired
-    private IGastoRepositorio gastoRepositorio;
+    private IGastoRepositorio repositorio;
 
-    // Obtener todos los gastos
-    public List<Gasto> obtenerTodos() {
-        return gastoRepositorio.findAll();
+    public Gasto guardar(Gasto gasto){
+        return repositorio.save(gasto);
     }
 
-    // Guardar un nuevo gasto
-    public Gasto guardarGasto(Gasto gasto) {
-        return gastoRepositorio.save(gasto);
+    public List<Gasto> listar(){
+        return repositorio.findAll();
     }
 
-    // Buscar por ID
-    public Optional<Gasto> obtenerPorId(Long id) {
-        return gastoRepositorio.findById(id);
+    public Gasto buscarPorId(Long id){
+        return repositorio.findById(id).orElse(null);
     }
 
-    // Eliminar un gasto
-    public void eliminarGasto(Long id) {
-        gastoRepositorio.deleteById(id);
+    public void eliminar(Long id){
+        repositorio.deleteById(id);
+    }
+
+    public Gasto actualizar(Long id, Gasto nuevo){
+        Gasto existente = repositorio.findById(id).orElse(null);
+
+        if(existente != null){
+            existente.setDescripcion(nuevo.getDescripcion());
+            existente.setFecha(nuevo.getFecha());
+            existente.setValor(nuevo.getValor());
+            existente.setIcono(nuevo.getIcono());
+            existente.setEsNecesario(nuevo.getEsNecesario());
+            existente.setUbicacion(nuevo.getUbicacion());
+            existente.setMetodoPago(nuevo.getMetodoPago());
+            existente.setCategorias(nuevo.getCategorias());
+            existente.setComercio(nuevo.getComercio());
+
+            return repositorio.save(existente);
+        }
+        return null;
     }
 }

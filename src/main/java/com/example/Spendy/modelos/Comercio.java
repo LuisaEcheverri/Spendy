@@ -1,10 +1,18 @@
 package com.example.Spendy.modelos;
 
 
+import java.util.List;
+
+import com.example.Spendy.modelos.utils.TipoComercio;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -18,18 +26,43 @@ public class Comercio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id; 
+    @Column(name="nit", nullable = false, unique = true, length = 15)
     private String nit;
+
+    @Column(name = "nombre", nullable = false, unique = false, length = 50)
     private String nombre;
+
+    @Column(name="actividad", nullable = false, unique = false, length = 50)
     private String actividad;
+
+    @Column(name="correo", nullable = false, unique = true, length = 100)
     private String correo;
+
+    @Column(name="telefono", nullable = false, unique = true, length = 20)
     private String telefono;
-    private String tipoComercio;
+
+    @Column(name="tipo_comercio", nullable = false, unique = false, length = 50)
+    @Enumerated(EnumType.STRING)
+    private TipoComercio tipoComercio;
+
+    @Column(name="direccion", nullable = false, unique = false, length = 100)
     private String direccion;
+
+    @Column(name="url", nullable = true, unique = false, length = 200)
     private String url;
+
+    @Column(name="descripcion", nullable = true, unique = false, length = 500)
     private String descripcion; // Que vende o que servicios ofrece
 
-    
+
+    //Relacion 1 comercio con muchos gastos
+
+    @OneToMany(mappedBy="usuario")
+    private List <Gasto> gastos;
+
+
     public Comercio() {
     }
 
@@ -81,13 +114,13 @@ public class Comercio {
         this.telefono = telefono;
     }
 
-    public String getTipoComercio() {
-        return tipoComercio;
-    }
+   public TipoComercio getTipoComercio() {
+    return tipoComercio;
+}
 
-    public void setTipoComercio(String tipoComercio) {
-        this.tipoComercio = tipoComercio;
-    }
+   public void setTipoComercio(TipoComercio tipoComercio) {
+    this.tipoComercio = tipoComercio;
+}
 
     public String getDireccion() {
         return direccion;
